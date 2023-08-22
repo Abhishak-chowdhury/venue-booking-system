@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if messages %}
+    {% for messagess in messages %}
+    <div class="alert alert-{{messagess.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{messagess}}</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+{% endif %}
+<div class="container table-responsive py-5"> 
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Venue</th>
+          <th scope="col">Description</th>
+          <th scope="col">Bookdate</th>
+          <th scope="col">Check in</th>
+          <th scope="col">Check out</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in book_obj %}
+        <tr>
+
+          <td>{{book.venue}}</td>
+          <td>{{book.description}}</td>
+          <td>{{book.bookdate}}</td>
+          <td>{{book.from_date}}</td>
+          <td>{{book.end_date}}</td>
+          <td>
+            {% if book.status %}
+                Booked
+            {% else %}
+                Cancled
+            {% endif %}
+          </td>
+          <td>
+            {% if book.status%}
+                <a href="{% url 'myapp:Order_Cancle' book.bid %}" class="btn btn-danger">cancel</a>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    
+{% endblock %}

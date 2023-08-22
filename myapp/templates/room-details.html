@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Venue Details</h2>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Room Details Section Begin -->
+<section class="room-details-section spad">
+    <div class="container">
+        {% if venue_obj %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="room-details-item">
+                    <img src="{{venue_obj.file.url}}" alt="ffff">
+                    <div class="rd-text">
+                        <div class="rd-title">
+                            <h3>{{venue_obj.vname}}</h3>
+                            <div class="rdt-right">
+                                <div class="rating">
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star-half_alt"></i>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <h2>₹{{venue_obj.vcharges}}<span>/Pernight</span></h2>
+                        <ul>
+                            <li>{{venue_obj.vtype}}</li>
+                            <li>{{venue_obj.vaddress}}</li>
+                        </ul>
+                       <p class="f-para">
+                        {{venue_obj.vdescriptions}}
+                       </p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-lg-4">
+                <div class="room-booking">
+                    <h3>Your Reservation</h3>
+                    {% if messages %}
+                    {% for messagess in messages %}
+                    <div class="alert alert-{{messagess.tags}} alert-dismissible fade show" role="alert">
+                        <strong>{{messagess}}</strong> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <form  method="POST">
+                        {% csrf_token %}
+                        <div class="check-date">
+                            <label for="date-in">Check In:</label>
+                            <input type="date" class="form-control" id="date-in" name="from_date" required>
+                            
+                        </div>
+                        <div class="check-date">
+                            <label for="date-out">Check Out:</label>
+                            <input type="date" class="form-control" id="date-out" name="end_date" required>
+                           
+                        </div>
+                        
+                        <div>
+                            <label for="">Booking description</label>
+                            <textarea name="description" id="" cols="30" rows="3" style="width: 100%;"></textarea>
+                        </div>
+                        <button type="submit">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<!-- Room Details Section End -->
+{% endblock %}
